@@ -9,8 +9,7 @@ const App = () => {
     useEffect(() => {
         const getProducts = async () => {
             try {
-                const response = await fetch("http://localhost:8000/products"); // Assuming your JSON is in public
-                // folder
+                const response = await fetch("api/products");
                 if (!response.ok) throw new Error("Failed to fetch products");
                 const data = await response.json();
                 setProducts(data);
@@ -32,8 +31,6 @@ const App = () => {
             <h1 className="text-2xl font-bold mb-4">🛒 Shopping Cart UI</h1>
             <ProductList products={products} />
         </div>
-
-
     );
 };
 
