@@ -1,11 +1,16 @@
 import ProductList from "./components/ProductList";
+import Header from "./components/Header";
 
 const App = () => {
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4">🛒 Shopping Cart UI</h1>
-            <ProductList />
+        <>
+            <Header />
+        <h1 className="text-2xl font-bold mb-4">🛒 Shopping Cart UI</h1>
+        <ProductList />
+    <div className="container mx-auto p-4">
+
         </div>
+        </>
     );
 };
 
