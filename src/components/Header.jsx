@@ -72,7 +72,7 @@ const Header = () => {
                                         Clear Cart
                                     </button>
                                 </>
-                            )}c
+                            )}
                         </div>
                     </div>
                 )}
