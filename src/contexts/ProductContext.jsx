@@ -1,9 +1,7 @@
-import { createContext, useState, useEffect } from "react"; // Fixed: lowercase 'c'
-// Remove this import - you don't need it in the context file
-// import ProductList from "../components/ProductList.jsx";
+// src/contexts/ProductContext.jsx
+import { createContext, useState, useEffect } from "react";
 
-// Create the context properly
-export const ProductContext = createContext(); // Add parentheses ()
+export const ProductContext = createContext();
 
 export function ProductProvider({ children }) {
     const [products, setProducts] = useState([]);
@@ -13,19 +11,36 @@ export function ProductProvider({ children }) {
     useEffect(() => {
         const getProducts = async () => {
             try {
-                const response = await fetch("/api/products"); // Added leading slash
+                const response = await fetch("https://dummyjson.com/products");
                 if (!response.ok) {
                     throw new Error(`Failed to fetch: ${response.status}`);
                 }
                 const data = await response.json();
-                setProducts(data);
+
+                // Map DummyJSON structure to match your app's expected format
+                const formattedProducts = data.products.map(product => ({
+                    id: product.id,
+                    name: product.title,               // 'title' → 'name'
+                    description: product.description,
+                    price: product.price,
+                    quantity: product.stock,           // 'stock' → 'quantity'
+                    category: product.category,
+                    rating: product.rating,
+                    image: product.thumbnail,          // Use thumbnail as main image
+                    images: product.images,            // Keep all images for gallery
+                    discountPercentage: product.discountPercentage,
+                    brand: product.brand
+                }));
+
+                setProducts(formattedProducts);
             } catch (err) {
                 setError(err.message);
-                console.log(err);
+                console.error("Fetch error:", err);
             } finally {
                 setLoading(false);
             }
         };
+
         getProducts();
     }, []);
 

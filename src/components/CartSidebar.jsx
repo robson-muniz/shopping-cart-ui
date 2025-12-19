@@ -3,7 +3,7 @@ import { useCart } from "../contexts/CartContext.jsx";
 import { FiShoppingCart, FiX, FiTrash2, FiPlus, FiMinus, FiPackage } from "react-icons/fi";
 
 const CartSidebar = ({ isOpen, onClose }) => {
-    const { cart, addToCart, removeFromCart, clearCart } = useCart();
+    const { cart, addToCart, removeFromCart, clearCart, removeItemCompletely } = useCart();
 
     const itemCount = cart.reduce((acc, item) => acc + item.qty, 0);
     const total = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
@@ -38,7 +38,7 @@ const CartSidebar = ({ isOpen, onClose }) => {
                                     </div>
                                     <div>
                                         <h2 className="text-xl font-bold text-gray-900">Your Cart</h2>
-                                        <p className="text-sm text-gray-500">{itemCount} items</p>
+                                        <p className="text-sm text-gray-500">{itemCount} {itemCount === 1 ? 'item' : 'items'}</p>
                                     </div>
                                 </div>
                                 <motion.button
@@ -86,7 +86,7 @@ const CartSidebar = ({ isOpen, onClose }) => {
                                                 initial={{ opacity: 0, scale: 0.9 }}
                                                 animate={{ opacity: 1, scale: 1 }}
                                                 exit={{ opacity: 0, scale: 0.9 }}
-                                                className="flex items-center bg-gray-50 rounded-xl p-4"
+                                                className="flex items-center bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-colors"
                                             >
                                                 <img
                                                     src={item.image}
@@ -100,33 +100,47 @@ const CartSidebar = ({ isOpen, onClose }) => {
                                                     <p className="text-blue-600 font-bold">
                                                         ${item.price.toFixed(2)}
                                                     </p>
+                                                    <p className="text-sm text-gray-500">
+                                                        ${(item.price * item.qty).toFixed(2)} total
+                                                    </p>
                                                 </div>
-                                                <div className="flex items-center space-x-3">
-                                                    <motion.button
-                                                        whileTap={{ scale: 0.9 }}
-                                                        onClick={() => removeFromCart(item.id)}
-                                                        className="p-1 hover:bg-gray-200 rounded"
-                                                    >
-                                                        <FiMinus />
-                                                    </motion.button>
-                                                    <span className="font-bold min-w-[24px] text-center">
-                                                        {item.qty}
-                                                    </span>
-                                                    <motion.button
-                                                        whileTap={{ scale: 0.9 }}
-                                                        onClick={() => addToCart(item)}
-                                                        className="p-1 hover:bg-gray-200 rounded"
-                                                    >
-                                                        <FiPlus />
-                                                    </motion.button>
+                                                <div className="flex flex-col items-center space-y-2">
+                                                    <div className="flex items-center space-x-3">
+                                                        <motion.button
+                                                            whileTap={{ scale: 0.9 }}
+                                                            onClick={() => removeFromCart(item.id)}
+                                                            className="w-8 h-8 flex items-center justify-center bg-white border border-gray-300 rounded-full hover:bg-gray-100"
+                                                            aria-label="Decrease quantity"
+                                                        >
+                                                            <FiMinus className="text-sm" />
+                                                        </motion.button>
+                                                        <span className="font-bold min-w-[24px] text-center">
+                                                            {item.qty}
+                                                        </span>
+                                                        <motion.button
+                                                            whileTap={{ scale: 0.9 }}
+                                                            onClick={() => addToCart(item)}
+                                                            className="w-8 h-8 flex items-center justify-center bg-white border border-gray-300 rounded-full hover:bg-gray-100"
+                                                            aria-label="Increase quantity"
+                                                        >
+                                                            <FiPlus className="text-sm" />
+                                                        </motion.button>
+                                                    </div>
                                                     <motion.button
                                                         whileHover={{ scale: 1.1 }}
+                                                        whileTap={{ scale: 0.9 }}
                                                         onClick={() => {
-                                                            while (item.qty > 0) {
-                                                                removeFromCart(item.id);
+                                                            // Remove item completely
+                                                            const confirmRemove = window.confirm(
+                                                                `Remove all ${item.qty} ${item.name}(s) from cart?`
+                                                            );
+                                                            if (confirmRemove) {
+                                                                // Use the cart context's removeItemCompletely function
+                                                                removeItemCompletely(item.id);
                                                             }
                                                         }}
                                                         className="p-2 text-red-500 hover:bg-red-50 rounded-full"
+                                                        aria-label="Remove item"
                                                     >
                                                         <FiTrash2 />
                                                     </motion.button>
@@ -162,7 +176,11 @@ const CartSidebar = ({ isOpen, onClose }) => {
                                                 Checkout Now
                                             </motion.button>
                                             <button
-                                                onClick={clearCart}
+                                                onClick={() => {
+                                                    if (cart.length > 0 && window.confirm('Clear entire cart?')) {
+                                                        clearCart();
+                                                    }
+                                                }}
                                                 className="w-full py-3 text-red-500 hover:bg-red-50 rounded-xl font-semibold transition-colors"
                                             >
                                                 Clear Cart

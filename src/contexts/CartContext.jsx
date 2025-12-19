@@ -1,4 +1,4 @@
-import {createContext, useContext, useEffect, useState} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const CartContext = createContext();
 
@@ -11,8 +11,6 @@ export function CartProvider({ children }) {
     useEffect(() => {
         localStorage.setItem("cart", JSON.stringify(cart));
     }, [cart]);
-
-
 
     const addToCart = (product) => {
         setCart((prev) => {
@@ -43,10 +41,21 @@ export function CartProvider({ children }) {
         );
     };
 
+    // ✅ NEW: Remove item completely (all quantities)
+    const removeItemCompletely = (id) => {
+        setCart((prev) => prev.filter((item) => item.id !== id));
+    };
+
     const clearCart = () => setCart([]);
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
+        <CartContext.Provider value={{
+            cart,
+            addToCart,
+            removeFromCart,
+            removeItemCompletely, // Add this
+            clearCart
+        }}>
             {children}
         </CartContext.Provider>
     );

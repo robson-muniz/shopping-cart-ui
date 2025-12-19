@@ -1,6 +1,8 @@
+// ProductCard.jsx
 import { useCart } from "../contexts/CartContext.jsx";
 import { motion } from "framer-motion";
-import { FiShoppingCart, FiStar, FiCheck } from "react-icons/fi";
+import { FiShoppingCart, FiStar, FiCheck, FiTag } from "react-icons/fi";
+import { useState } from "react";
 
 const ProductCard = ({ product, index }) => {
     const { addToCart, cart } = useCart();
@@ -27,15 +29,25 @@ const ProductCard = ({ product, index }) => {
                 {/* Rating Badge */}
                 <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center">
                     <FiStar className="text-amber-400 fill-current mr-1" />
-                    <span className="font-semibold text-sm">{product.rating}</span>
+                    <span className="font-semibold text-sm">
+                        {product.rating ? product.rating.toFixed(1) : 'N/A'}
+                    </span>
                 </div>
+
+                {/* Discount Badge (if applicable) */}
+                {product.discountPercentage && product.discountPercentage > 0 && (
+                    <div className="absolute top-3 right-3 bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 rounded-full flex items-center text-sm font-bold">
+                        <FiTag className="mr-1" />
+                        -{product.discountPercentage}%
+                    </div>
+                )}
 
                 {/* Quick Add to Cart */}
                 <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => addToCart(product)}
-                    className={`absolute top-3 right-3 p-2 rounded-full shadow-lg ${
+                    className={`absolute top-14 right-3 p-2 rounded-full shadow-lg ${
                         isInCart
                             ? 'bg-green-500 text-white'
                             : 'bg-white text-gray-700 hover:bg-blue-500 hover:text-white'
@@ -53,8 +65,13 @@ const ProductCard = ({ product, index }) => {
                         </div>
                         <div className="w-full bg-gray-700 rounded-full h-1.5">
                             <div
-                                className="bg-green-400 h-1.5 rounded-full"
-                                style={{ width: `${Math.min(100, (product.quantity / 50) * 100)}%` }}
+                                className={`h-1.5 rounded-full ${
+                                    product.quantity > 10 ? 'bg-green-400' :
+                                        product.quantity > 0 ? 'bg-yellow-400' : 'bg-red-400'
+                                }`}
+                                style={{
+                                    width: `${Math.min(100, (product.quantity / 100) * 100)}%`
+                                }}
                             ></div>
                         </div>
                     </div>
@@ -64,15 +81,37 @@ const ProductCard = ({ product, index }) => {
             {/* Product Info */}
             <div className="p-5">
                 <div className="flex justify-between items-start mb-2">
-                    <div>
-                        <h3 className="font-bold text-lg text-gray-900 group-hover:text-blue-600 transition-colors">
+                    <div className="flex-1">
+                        <h3 className="font-bold text-lg text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-1">
                             {product.name}
                         </h3>
-                        <p className="text-sm text-gray-500 mt-1">{product.category}</p>
+                        <div className="flex items-center mt-1">
+                            <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded mr-2">
+                                {product.category}
+                            </span>
+                            {product.brand && (
+                                <span className="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded">
+                                    {product.brand}
+                                </span>
+                            )}
+                        </div>
                     </div>
-                    <span className="text-lg font-bold text-blue-600">
-                        ${product.price.toFixed(2)}
-                    </span>
+                    <div className="text-right">
+                        {product.discountPercentage && product.discountPercentage > 0 ? (
+                            <>
+                                <span className="text-lg font-bold text-blue-600">
+                                    ${(product.price * (1 - product.discountPercentage / 100)).toFixed(2)}
+                                </span>
+                                <span className="text-sm text-gray-400 line-through ml-2 block">
+                                    ${product.price.toFixed(2)}
+                                </span>
+                            </>
+                        ) : (
+                            <span className="text-lg font-bold text-blue-600">
+                                ${product.price.toFixed(2)}
+                            </span>
+                        )}
+                    </div>
                 </div>
 
                 <p className="text-gray-600 text-sm mb-4 line-clamp-2">
