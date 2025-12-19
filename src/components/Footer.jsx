@@ -1,8 +1,9 @@
+// src/components/Footer.jsx
 import { FiFacebook, FiTwitter, FiInstagram, FiMail, FiMapPin, FiPhone, FiHeart } from 'react-icons/fi';
 
 const Footer = () => {
     return (
-        <footer className="bg-gray-900 text-white mt-20">
+        <footer className="bg-gray-900 dark:bg-gray-950 text-white mt-20">
             <div className="container mx-auto px-4 py-12">
                 <div className="grid md:grid-cols-4 gap-8">
                     {/* Logo & Description */}
@@ -24,7 +25,7 @@ const Footer = () => {
 
                     {/* Quick Links */}
                     <div>
-                        <h3 className="text-lg font-bold mb-4">Quick Links</h3>
+                        <h3 className="text-lg font-bold mb-4 text-gray-300">Quick Links</h3>
                         <ul className="space-y-2">
                             {['Home', 'Products', 'About Us', 'Contact', 'FAQs', 'Shipping Policy'].map((link) => (
                                 <li key={link}>
@@ -41,7 +42,7 @@ const Footer = () => {
 
                     {/* Contact Info */}
                     <div>
-                        <h3 className="text-lg font-bold mb-4">Contact Us</h3>
+                        <h3 className="text-lg font-bold mb-4 text-gray-300">Contact Us</h3>
                         <ul className="space-y-3">
                             <li className="flex items-center text-gray-400">
                                 <FiMapPin className="mr-3 flex-shrink-0" />
@@ -60,7 +61,7 @@ const Footer = () => {
 
                     {/* Newsletter */}
                     <div>
-                        <h3 className="text-lg font-bold mb-4">Stay Updated</h3>
+                        <h3 className="text-lg font-bold mb-4 text-gray-300">Stay Updated</h3>
                         <p className="text-gray-400 mb-4">
                             Subscribe for exclusive offers and new arrivals.
                         </p>
@@ -83,7 +84,7 @@ const Footer = () => {
                                 <a
                                     key={social.label}
                                     href="#"
-                                    className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition-colors"
+                                    className="w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors"
                                     aria-label={social.label}
                                 >
                                     <social.Icon />

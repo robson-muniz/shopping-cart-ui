@@ -34,7 +34,7 @@ const App = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col">
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 flex flex-col">
             {/* Toaster for notifications */}
             <Toaster
                 position="top-right"
@@ -64,31 +64,31 @@ const App = () => {
                     <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mb-4">
                         <FiShoppingBag className="text-3xl text-white" />
                     </div>
-                    <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                    <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
                         Discover Amazing Products
                     </h1>
-                    <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+                    <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-lg">
                         Browse our collection of premium products with free shipping on orders over $50
                     </p>
 
                     {/* Stats */}
                     <div className="flex justify-center gap-8 mt-8">
                         <div className="text-center">
-                            <div className="text-2xl font-bold text-blue-600">100+</div>
+                            <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">100+</div>
                             <div className="flex justify-center text-amber-400 mt-1">
                                 {[...Array(5)].map((_, i) => (
                                     <FiStar key={i} className="fill-current" />
                                 ))}
                             </div>
-                            <div className="text-sm text-gray-500">Products</div>
+                            <div className="text-sm text-gray-500 dark:text-gray-400">Products</div>
                         </div>
                         <div className="text-center">
-                            <div className="text-2xl font-bold text-green-600">Free</div>
-                            <div className="text-sm text-gray-500">Shipping Over $50</div>
+                            <div className="text-2xl font-bold text-green-600 dark:text-green-400">Free</div>
+                            <div className="text-sm text-gray-500 dark:text-gray-400">Shipping Over $50</div>
                         </div>
                         <div className="text-center">
-                            <div className="text-2xl font-bold text-purple-600">24/7</div>
-                            <div className="text-sm text-gray-500">Support</div>
+                            <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">24/7</div>
+                            <div className="text-sm text-gray-500 dark:text-gray-400">Support</div>
                         </div>
                     </div>
                 </motion.div>
@@ -109,15 +109,15 @@ const App = () => {
                 {/* Products Section */}
                 <section>
                     <div className="flex justify-between items-center mb-8">
-                        <h2 className="text-2xl font-bold text-gray-900">
+                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                             {filteredProducts ? 'Search Results' : 'Featured Products'}
                         </h2>
                         <button
                             onClick={resetFilters}
                             className={`px-4 py-2 rounded-lg font-medium transition-all ${
                                 filteredProducts
-                                    ? 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                    : 'text-gray-400 cursor-default'
+                                    ? 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                                    : 'text-gray-400 dark:text-gray-500 cursor-default'
                             }`}
                             disabled={!filteredProducts}
                         >

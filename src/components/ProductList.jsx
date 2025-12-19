@@ -26,9 +26,9 @@ const ProductList = ({ filteredProducts, searchQuery, selectedCategory }) => {
                     transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                     className="mb-4"
                 >
-                    <FiLoader className="text-4xl text-blue-500" />
+                    <FiLoader className="text-4xl text-blue-500 dark:text-blue-400" />
                 </motion.div>
-                <p className="text-gray-600">Loading amazing products...</p>
+                <p className="text-gray-600 dark:text-gray-400">Loading amazing products...</p>
             </motion.div>
         );
     }
@@ -40,11 +40,11 @@ const ProductList = ({ filteredProducts, searchQuery, selectedCategory }) => {
                 animate={{ opacity: 1, scale: 1 }}
                 className="text-center py-20"
             >
-                <div className="inline-block p-4 bg-red-50 rounded-full mb-4">
+                <div className="inline-block p-4 bg-red-50 dark:bg-red-900/20 rounded-full mb-4">
                     <FiLoader className="text-2xl text-red-500" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Oops! Something went wrong</h3>
-                <p className="text-gray-600">{error}</p>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Oops! Something went wrong</h3>
+                <p className="text-gray-600 dark:text-gray-400">{error}</p>
                 <button
                     onClick={() => window.location.reload()}
                     className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
@@ -62,11 +62,11 @@ const ProductList = ({ filteredProducts, searchQuery, selectedCategory }) => {
                 animate={{ opacity: 1 }}
                 className="text-center py-20"
             >
-                <div className="inline-block p-6 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full mb-6">
-                    <FiSearch className="text-4xl text-blue-500" />
+                <div className="inline-block p-6 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-gray-800 dark:to-gray-700 rounded-full mb-6">
+                    <FiSearch className="text-4xl text-blue-500 dark:text-blue-400" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-3">No Products Found</h3>
-                <p className="text-gray-600 mb-8 max-w-md mx-auto">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">No Products Found</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
                     {searchQuery
                         ? `No products found for "${searchQuery}". Try a different search term.`
                         : selectedCategory && selectedCategory !== 'all'
@@ -91,18 +91,18 @@ const ProductList = ({ filteredProducts, searchQuery, selectedCategory }) => {
                 <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-8 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl"
+                    className="mb-8 p-4 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900 rounded-xl"
                 >
                     <div className="flex flex-col md:flex-row md:items-center justify-between">
                         <div className="flex items-center mb-4 md:mb-0">
-                            <FiFilter className="text-blue-500 mr-2" />
-                            <span className="font-semibold text-gray-700">
+                            <FiFilter className="text-blue-500 dark:text-blue-400 mr-2" />
+                            <span className="font-semibold text-gray-700 dark:text-gray-300">
                                 Showing {displayProducts.length} {displayProducts.length === 1 ? 'product' : 'products'}
                                 {searchQuery && ` for "${searchQuery}"`}
                                 {selectedCategory && selectedCategory !== 'all' && ` in "${selectedCategory.replace('-', ' ')}"`}
                             </span>
                         </div>
-                        <div className="text-gray-600">
+                        <div className="text-gray-600 dark:text-gray-400">
                             {filteredProducts && (
                                 <span>Filtered from {products.length} total products</span>
                             )}

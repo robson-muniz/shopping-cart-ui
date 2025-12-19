@@ -1,9 +1,10 @@
+// src/components/CartSidebar.jsx
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "../contexts/CartContext.jsx";
 import { FiShoppingCart, FiX, FiTrash2, FiPlus, FiMinus, FiPackage } from "react-icons/fi";
 
 const CartSidebar = ({ isOpen, onClose }) => {
-    const { cart, addToCart, removeFromCart, clearCart, removeItemCompletely } = useCart();
+    const { cart, addToCart, removeFromCart, removeItemCompletely, clearCart } = useCart();
 
     const itemCount = cart.reduce((acc, item) => acc + item.qty, 0);
     const total = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
@@ -27,25 +28,25 @@ const CartSidebar = ({ isOpen, onClose }) => {
                         animate={{ x: 0 }}
                         exit={{ x: '100%' }}
                         transition={{ type: "spring", damping: 25 }}
-                        className="fixed right-0 top-0 h-full w-full md:w-96 bg-white z-50 shadow-2xl overflow-y-auto"
+                        className="fixed right-0 top-0 h-full w-full md:w-96 bg-white dark:bg-gray-900 z-50 shadow-2xl dark:shadow-gray-900 overflow-y-auto"
                     >
                         {/* Header */}
-                        <div className="sticky top-0 bg-white border-b p-6">
+                        <div className="sticky top-0 bg-white dark:bg-gray-900 border-b dark:border-gray-800 p-6">
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center space-x-3">
-                                    <div className="p-2 bg-blue-100 rounded-lg">
-                                        <FiShoppingCart className="text-blue-600 text-xl" />
+                                    <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                                        <FiShoppingCart className="text-blue-600 dark:text-blue-400 text-xl" />
                                     </div>
                                     <div>
-                                        <h2 className="text-xl font-bold text-gray-900">Your Cart</h2>
-                                        <p className="text-sm text-gray-500">{itemCount} {itemCount === 1 ? 'item' : 'items'}</p>
+                                        <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Your Cart</h2>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">{itemCount} {itemCount === 1 ? 'item' : 'items'}</p>
                                     </div>
                                 </div>
                                 <motion.button
                                     whileHover={{ rotate: 90 }}
                                     whileTap={{ scale: 0.9 }}
                                     onClick={onClose}
-                                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                                    className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors text-gray-700 dark:text-gray-300"
                                 >
                                     <FiX className="text-xl" />
                                 </motion.button>
@@ -60,13 +61,13 @@ const CartSidebar = ({ isOpen, onClose }) => {
                                     animate={{ opacity: 1, y: 0 }}
                                     className="text-center py-12"
                                 >
-                                    <div className="inline-block p-4 bg-gray-100 rounded-full mb-4">
-                                        <FiPackage className="text-3xl text-gray-400" />
+                                    <div className="inline-block p-4 bg-gray-100 dark:bg-gray-800 rounded-full mb-4">
+                                        <FiPackage className="text-3xl text-gray-400 dark:text-gray-500" />
                                     </div>
-                                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
                                         Your cart is empty
                                     </h3>
-                                    <p className="text-gray-500 mb-6">
+                                    <p className="text-gray-500 dark:text-gray-400 mb-6">
                                         Add some amazing products to get started!
                                     </p>
                                     <button
@@ -86,7 +87,7 @@ const CartSidebar = ({ isOpen, onClose }) => {
                                                 initial={{ opacity: 0, scale: 0.9 }}
                                                 animate={{ opacity: 1, scale: 1 }}
                                                 exit={{ opacity: 0, scale: 0.9 }}
-                                                className="flex items-center bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-colors"
+                                                className="flex items-center bg-gray-50 dark:bg-gray-800 rounded-xl p-4 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                                             >
                                                 <img
                                                     src={item.image}
@@ -94,13 +95,13 @@ const CartSidebar = ({ isOpen, onClose }) => {
                                                     className="w-16 h-16 object-cover rounded-lg"
                                                 />
                                                 <div className="ml-4 flex-1">
-                                                    <h4 className="font-semibold text-gray-900">
+                                                    <h4 className="font-semibold text-gray-900 dark:text-gray-100">
                                                         {item.name}
                                                     </h4>
-                                                    <p className="text-blue-600 font-bold">
+                                                    <p className="text-blue-600 dark:text-blue-400 font-bold">
                                                         ${item.price.toFixed(2)}
                                                     </p>
-                                                    <p className="text-sm text-gray-500">
+                                                    <p className="text-sm text-gray-500 dark:text-gray-400">
                                                         ${(item.price * item.qty).toFixed(2)} total
                                                     </p>
                                                 </div>
@@ -109,18 +110,18 @@ const CartSidebar = ({ isOpen, onClose }) => {
                                                         <motion.button
                                                             whileTap={{ scale: 0.9 }}
                                                             onClick={() => removeFromCart(item.id)}
-                                                            className="w-8 h-8 flex items-center justify-center bg-white border border-gray-300 rounded-full hover:bg-gray-100"
+                                                            className="w-8 h-8 flex items-center justify-center bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300"
                                                             aria-label="Decrease quantity"
                                                         >
                                                             <FiMinus className="text-sm" />
                                                         </motion.button>
-                                                        <span className="font-bold min-w-[24px] text-center">
+                                                        <span className="font-bold min-w-[24px] text-center dark:text-gray-300">
                                                             {item.qty}
                                                         </span>
                                                         <motion.button
                                                             whileTap={{ scale: 0.9 }}
                                                             onClick={() => addToCart(item)}
-                                                            className="w-8 h-8 flex items-center justify-center bg-white border border-gray-300 rounded-full hover:bg-gray-100"
+                                                            className="w-8 h-8 flex items-center justify-center bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300"
                                                             aria-label="Increase quantity"
                                                         >
                                                             <FiPlus className="text-sm" />
@@ -130,16 +131,14 @@ const CartSidebar = ({ isOpen, onClose }) => {
                                                         whileHover={{ scale: 1.1 }}
                                                         whileTap={{ scale: 0.9 }}
                                                         onClick={() => {
-                                                            // Remove item completely
                                                             const confirmRemove = window.confirm(
                                                                 `Remove all ${item.qty} ${item.name}(s) from cart?`
                                                             );
                                                             if (confirmRemove) {
-                                                                // Use the cart context's removeItemCompletely function
                                                                 removeItemCompletely(item.id);
                                                             }
                                                         }}
-                                                        className="p-2 text-red-500 hover:bg-red-50 rounded-full"
+                                                        className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full"
                                                         aria-label="Remove item"
                                                     >
                                                         <FiTrash2 />
@@ -150,20 +149,20 @@ const CartSidebar = ({ isOpen, onClose }) => {
                                     </div>
 
                                     {/* Summary */}
-                                    <div className="border-t pt-6 space-y-4">
+                                    <div className="border-t dark:border-gray-800 pt-6 space-y-4">
                                         <div className="flex justify-between text-lg">
-                                            <span className="text-gray-600">Subtotal</span>
-                                            <span className="font-bold">${total.toFixed(2)}</span>
+                                            <span className="text-gray-600 dark:text-gray-400">Subtotal</span>
+                                            <span className="font-bold dark:text-gray-300">${total.toFixed(2)}</span>
                                         </div>
                                         <div className="flex justify-between text-lg">
-                                            <span className="text-gray-600">Shipping</span>
-                                            <span className="font-bold">
+                                            <span className="text-gray-600 dark:text-gray-400">Shipping</span>
+                                            <span className="font-bold dark:text-gray-300">
                                                 {total > 50 ? 'Free' : '$5.99'}
                                             </span>
                                         </div>
-                                        <div className="flex justify-between text-xl font-bold pt-4 border-t">
-                                            <span>Total</span>
-                                            <span>${(total + (total > 50 ? 0 : 5.99)).toFixed(2)}</span>
+                                        <div className="flex justify-between text-xl font-bold pt-4 border-t dark:border-gray-800">
+                                            <span className="dark:text-gray-300">Total</span>
+                                            <span className="dark:text-gray-300">${(total + (total > 50 ? 0 : 5.99)).toFixed(2)}</span>
                                         </div>
 
                                         {/* Actions */}
@@ -181,13 +180,13 @@ const CartSidebar = ({ isOpen, onClose }) => {
                                                         clearCart();
                                                     }
                                                 }}
-                                                className="w-full py-3 text-red-500 hover:bg-red-50 rounded-xl font-semibold transition-colors"
+                                                className="w-full py-3 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl font-semibold transition-colors"
                                             >
                                                 Clear Cart
                                             </button>
                                             <button
                                                 onClick={onClose}
-                                                className="w-full py-3 text-gray-600 hover:bg-gray-100 rounded-xl transition-colors"
+                                                className="w-full py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors"
                                             >
                                                 Continue Shopping
                                             </button>
