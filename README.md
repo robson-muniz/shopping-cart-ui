@@ -11,7 +11,7 @@
 ![ShopStyle Hero Banner](https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1200&h=400&q=80)
 
 ## ✨ **Live Demo**
-🔗 **[Try it here](https://shopstyle-demo.vercel.app)** • 🌓 **Toggle dark mode** • 📱 **Fully responsive**
+🔗 **[Try it here](https://shopping-cart-ui-ul6a.vercel.app/)** • 🌓 **Toggle dark mode** • 📱 **Fully responsive**
 
 ---
 
